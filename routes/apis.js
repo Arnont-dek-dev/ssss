@@ -16,13 +16,18 @@ router.delete('/device/:id', db.deleteDevice);
 
 router.get('/location', db.getLocation);
 router.post('/location', db.createLocation);
-router.put('/location', db.updateLocation);
-router.delete('/location', db.deleteLocation);
+router.put('/location/:id', db.updateLocation);
+router.delete('/location/:id', db.deleteLocation);
 
 router.get('/scanner', db.getScanner);
 router.post('/scanner', db.createScanner);
-router.put('/scanner', db.updateScanner);
-router.delete('/scanner', db.deleteScanner);
+router.put('/scanner/:id', db.updateScanner);
+router.delete('/scanner/:id', db.deleteScanner);
+
+router.get('/event', db.getEvent);
+router.post('/event', db.createEvent);
+router.put('/event/:id', db.updateEvent);
+router.delete('/event/:id', db.deleteEvent);
 // const pgp = require('pg-promise')();
 // const connection = `postgres://postgres:123456@localhost:5437/postgres`;
 // const db = pgp(connection);

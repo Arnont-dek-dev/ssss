@@ -277,10 +277,82 @@ const updateScanner = async(req, res) => {
     res.json(output);
 }
 
-/**************************** DELETE LOCATION BY ID *******************************/
+/**************************** DELETE SCANNER BY ID *******************************/
 const deleteScanner = async(req, res) => {
     try {
         const result = await pool.query(`DELETE FROM scanner WHERE id = '${req.params.id}'`);
+        output = {
+            status: "success",
+            result: result
+        };
+    } catch (error) {
+        output = {
+            status: "success",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+
+///////////////////////////// CRUD API FROM EVENT TABLE ////////////////////////////////////////
+
+/******************************** GET ALL EVENT ***********************************/
+const getEvent = async(req, res) => {
+    try {
+        const result = await pool.query(`SELECT scannerid, deviceid, "timestamp", distance FROM "event"`);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+
+    res.json(output)
+}
+
+/********************************* CREATE EVENT *************************************/
+const createEvent = async(req, res) => {
+    try {
+        const result = await pool.query(`INSERT INTO "event" (scannerid, deviceid, "timestamp", distance) VALUES('${req.body.scannerid}', '${req.body.deviceid}', '${req.body.timestamp}', ${req.body.distance})`);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+/******************************* UPDATE EVENT BY ID *******************************/
+const updateEvent = async(req, res) => {
+    try {
+        const result = await pool.query(`UPDATE "event" SET scannerid='${req.body.scannerid}', deviceid='${req.body.deviceid}', "timestamp"='${req.body.timestamp}', distance=${req.body.distance} where id = '${req.params.id}'`);
+        output = {
+            status: "success",
+            result: result
+        };
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+/**************************** DELETE EVENT BY ID *******************************/
+const deleteEvent = async(req, res) => {
+    try {
+        const result = await pool.query(`DELETE FROM event WHERE id = '${req.params.id}'`);
         output = {
             status: "success",
             result: result
@@ -311,4 +383,8 @@ module.exports = {
     createScanner,
     updateScanner,
     deleteScanner,
+    getEvent,
+    createEvent,
+    updateEvent,
+    deleteEvent
 }
