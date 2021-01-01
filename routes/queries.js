@@ -119,7 +119,7 @@ const createDevice = async(req, res) => {
 /******************************* UPDATE DEVICE BY ID *******************************/
 const updateDevice = async(req, res) => {
     try {
-        const result = await pool.query(`UPDATE device SET id='${req.body.id}', category='${req.body.category}', "owner"='${req.body.id}' where id = ${req.params.id}''`);
+        const result = await pool.query(`UPDATE device SET id='${req.body.id}', category='${req.body.category}', "owner"='${req.body.id}' where id = '${req.params.id}'`);
         output = {
             status: "success",
             result: result
@@ -133,10 +133,82 @@ const updateDevice = async(req, res) => {
     res.json(output);
 }
 
-/**************************** DELETE USER BY ID *******************************/
+/**************************** DELETE DEVICE BY ID *******************************/
 const deleteDevice = async(req, res) => {
     try {
         const result = await pool.query(`DELETE FROM device WHERE id = '${req.params.id}'`);
+        output = {
+            status: "success",
+            result: result
+        };
+    } catch (error) {
+        output = {
+            status: "success",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+
+///////////////////////////// CRUD API FROM LOCATION TABLE ////////////////////////////////////////
+
+/******************************** GET ALL LOCATION ***********************************/
+const getLocation = async(req, res) => {
+    try {
+        const result = await pool.query(`SELECT id, "name", latitude, longitude, description FROM "location"`);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+
+    res.json(output)
+}
+
+/********************************* CREATE LOCATION *************************************/
+const createLocation = async(req, res) => {
+    try {
+        const result = await pool.query(`INSERT INTO "location" (id, "name", latitude, longitude, description) VALUES(${req.body.id}, '${req.body.name}', ${req.body.latitude}, ${req.body.longitude}, '${req.body.description}')`);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+/******************************* UPDATE LOCATION BY ID *******************************/
+const updateLocation = async(req, res) => {
+    try {
+        const result = await pool.query(`UPDATE "location" SET id=${req.body.id}, "name"='${req.body.name}', latitude=${req.body.latitude}, longitude=${req.body.longitude}, description='${req.body.description}' where id = '${req.params.id}'`);
+        output = {
+            status: "success",
+            result: result
+        };
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+/**************************** DELETE LOCATION BY ID *******************************/
+const deleteLocation = async(req, res) => {
+    try {
+        const result = await pool.query(`DELETE FROM location WHERE id = '${req.params.id}'`);
         output = {
             status: "success",
             result: result
@@ -159,4 +231,8 @@ module.exports = {
     createDevice,
     updateDevice,
     deleteDevice,
+    getLocation,
+    createLocation,
+    updateLocation,
+    deleteLocation,
 }

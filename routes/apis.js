@@ -14,6 +14,7 @@ router.post('/device', db.createDevice);
 router.put('/device/:id', db.updateDevice);
 router.delete('/device/:id', db.deleteDevice);
 
+router.get('/location', db.getLocation);
 // const pgp = require('pg-promise')();
 // const connection = `postgres://postgres:123456@localhost:5437/postgres`;
 // const db = pgp(connection);
