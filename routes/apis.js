@@ -9,6 +9,11 @@ router.post('/user', db.createUser);
 router.put('/user/:id', db.updateUser);
 router.delete('/user/:id', db.deleteUser);
 
+router.get('/device', db.getDevice);
+router.post('/device', db.createDevice);
+router.put('/device/:id', db.updateDevice);
+router.delete('/device/:id', db.deleteDevice);
+
 // const pgp = require('pg-promise')();
 // const connection = `postgres://postgres:123456@localhost:5437/postgres`;
 // const db = pgp(connection);

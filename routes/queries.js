@@ -78,9 +78,85 @@ const deleteUser = async(req, res) => {
     res.json(output);
 }
 
+
+///////////////////////////// CRUD API FROM DEVICE TABLE ////////////////////////////////////////
+
+/******************************** GET ALL DEVICE ***********************************/
+const getDevice = async(req, res) => {
+    try {
+        const result = await pool.query(`SELECT id, category, "owner" FROM device `);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+
+    res.json(output)
+}
+
+/********************************* CREATE DEVICE *************************************/
+const createDevice = async(req, res) => {
+    try {
+        const result = await pool.query(`INSERT INTO device (id, category, "owner") VALUES('${req.body.id}', '${req.body.category}', '${req.body.owner}')`);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+/******************************* UPDATE DEVICE BY ID *******************************/
+const updateDevice = async(req, res) => {
+    try {
+        const result = await pool.query(`UPDATE device SET id='${req.body.id}', category='${req.body.category}', "owner"='${req.body.id}' where id = ${req.params.id}''`);
+        output = {
+            status: "success",
+            result: result
+        };
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+/**************************** DELETE USER BY ID *******************************/
+const deleteDevice = async(req, res) => {
+    try {
+        const result = await pool.query(`DELETE FROM device WHERE id = '${req.params.id}'`);
+        output = {
+            status: "success",
+            result: result
+        };
+    } catch (error) {
+        output = {
+            status: "success",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
 module.exports = {
     getUsers,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getDevice,
+    createDevice,
+    updateDevice,
+    deleteDevice,
 }
