@@ -222,6 +222,78 @@ const deleteLocation = async(req, res) => {
     res.json(output);
 }
 
+
+///////////////////////////// CRUD API FROM SCANNER TABLE ////////////////////////////////////////
+
+/******************************** GET ALL SCANNER ***********************************/
+const getScanner = async(req, res) => {
+    try {
+        const result = await pool.query(`SELECT id, model, "location" FROM scanner`);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+
+    res.json(output)
+}
+
+/********************************* CREATE SCANNER *************************************/
+const createScanner = async(req, res) => {
+    try {
+        const result = await pool.query(`INSERT INTO scanner (id, model, "location") VALUES('${req.body.id}', '${req.body.model}', '${req.body.location}')`);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+/******************************* UPDATE SCANNER BY ID *******************************/
+const updateScanner = async(req, res) => {
+    try {
+        const result = await pool.query(`UPDATE scanner SET id='${req.body.id}', model='${req.body.model}', "location"='${req.body.location}' where id= '${req.params.id}'`);
+        output = {
+            status: "success",
+            result: result
+        };
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+/**************************** DELETE LOCATION BY ID *******************************/
+const deleteScanner = async(req, res) => {
+    try {
+        const result = await pool.query(`DELETE FROM scanner WHERE id = '${req.params.id}'`);
+        output = {
+            status: "success",
+            result: result
+        };
+    } catch (error) {
+        output = {
+            status: "success",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
 module.exports = {
     getUsers,
     createUser,
@@ -235,4 +307,8 @@ module.exports = {
     createLocation,
     updateLocation,
     deleteLocation,
+    getScanner,
+    createScanner,
+    updateScanner,
+    deleteScanner,
 }
