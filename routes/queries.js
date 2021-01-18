@@ -3,7 +3,7 @@ const pool = new Pool({
     user: 'mable',
     host: 'mean.psu.ac.th',
     database: 'mable',
-    password: '1zxc123**',
+    password: 'zxc123**',
     port: '5432',
 });
 
@@ -318,7 +318,9 @@ const getEvent = async(req, res) => {
 /********************************* CREATE EVENT *************************************/
 const createEvent = async(req, res) => {
     try {
-        const result = await pool.query(`INSERT INTO "event" (scannerid, deviceid, "timestamp", distance) VALUES('${req.body.scannerid}', '${req.body.deviceid}', '${req.body.timestamp}', ${req.body.distance})`);
+        const sql = `INSERT INTO "event" (scannerid, deviceid, "timestamp", distance) VALUES('${req.body.scannerid}', '${req.body.deviceid}', '${req.body.timestamp}', ${req.body.distance})`;
+        console.log(sql);
+        const result = await pool.query(sql);
         output = {
             status: "success",
             result: result
@@ -370,16 +372,15 @@ const deleteEvent = async(req, res) => {
 const createArrayEvent = async(req, res) => {
     try {
 
-        const result = await pool.query(`INSERT INTO "event" (scannerid, deviceid, "timestamp", distance) VALUES('$1', '$2', '$3', $4)`, data.scannerid, data.deviceid, data.timestamp, data.distance);
-
-        var data = [req.body.scannerid,
-            req.body.deviceid,
-            req.body.timestamp,
-            req.body.distance
-        ]
+        for(let id in req.body){
+            const data = req.body[id];
+            const sql = `INSERT INTO "event" (scannerid, deviceid, "timestamp", distance) VALUES('${data.scannerid}', '${data.deviceid}', '${data.timestamp}', ${data.distance})`;
+            await pool.query(sql);
+        }
+              
         output = {
             status: "success",
-            result: result
+            result: req.body.lenght
         }
     } catch (error) {
         output = {
