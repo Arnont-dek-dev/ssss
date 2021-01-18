@@ -28,6 +28,7 @@ router.get('/event', db.getEvent);
 router.post('/event', db.createEvent);
 router.put('/event/:id', db.updateEvent);
 router.delete('/event/:id', db.deleteEvent);
+router.post('/eventarr', db.createArrayEvent);
 // const pgp = require('pg-promise')();
 // const connection = `postgres://postgres:123456@localhost:5437/postgres`;
 // const db = pgp(connection);

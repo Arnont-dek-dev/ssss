@@ -1,10 +1,10 @@
 const Pool = require('pg').Pool;
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    password: '123456',
-    port: '5437',
+    user: 'mable',
+    host: 'mean.psu.ac.th',
+    database: 'mable',
+    password: '1zxc123**',
+    port: '5432',
 });
 
 ///////////////////////////// CRUD API FROM USER TABLE ////////////////////////////////////////
@@ -366,6 +366,30 @@ const deleteEvent = async(req, res) => {
     res.json(output);
 }
 
+/**************************** CREATE ARRAY EVENT BY ID *******************************/
+const createArrayEvent = async(req, res) => {
+    try {
+
+        const result = await pool.query(`INSERT INTO "event" (scannerid, deviceid, "timestamp", distance) VALUES('$1', '$2', '$3', $4)`, data.scannerid, data.deviceid, data.timestamp, data.distance);
+
+        var data = [req.body.scannerid,
+            req.body.deviceid,
+            req.body.timestamp,
+            req.body.distance
+        ]
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
 module.exports = {
     getUsers,
     createUser,
@@ -386,5 +410,6 @@ module.exports = {
     getEvent,
     createEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    createArrayEvent
 }
