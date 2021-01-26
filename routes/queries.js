@@ -370,14 +370,48 @@ const deleteEvent = async(req, res) => {
 
 /**************************** CREATE ARRAY EVENT BY ID *******************************/
 const createArrayEvent = async(req, res) => {
-    try {
+    let scanner_id = "NULL";
+    let device_address = "NULL";
+    let device_name = "NULL";
+    let device_appearance = "NULL";
+    let device_manufacturerdata = "NULL";
+    let device_serviceuuid = "NULL";
+    let device_txpower = "NULL";
+    let device_rssi = "NULL";
 
-        for(let id in req.body){
+    try {
+        if (req.body.scanner_id != undefined) {
+            scanner_id = req.body.scanner_id;
+        }
+        if (req.body.device_address != undefined) {
+            device_address = req.body.device_address;
+        }
+        if (req.body.device_name != undefined) {
+            device_name = req.body.device_name;
+        }
+        if (req.body.device_appearance != undefined) {
+            device_appearance = req.body.device_appearance;
+        }
+        if (req.body.device_manufacturerdata != undefined) {
+            device_manufacturerdata = req.body.device_manufacturerdata;
+        }
+        if (req.body.device_serviceuuid != undefined) {
+            device_serviceuuid = req.body.device_serviceuuid;
+        }
+        if (req.body.device_txpower != undefined) {
+            device_txpower = req.body.device_txpower;
+        }
+        if (req.body.device_rssi != undefined) {
+            device_rssi = req.body.device_rssi;
+        }
+        for (let id in req.body) {
+            const now = new Date().now();
             const data = req.body[id];
-            const sql = `INSERT INTO "event" (scannerid, deviceid, "timestamp", distance) VALUES('${data.scannerid}', '${data.deviceid}', '${data.timestamp}', ${data.distance})`;
+            const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
+            VALUES('${data.scanner_id}', '${data.device_address}', '${data.device_name}', '${data.device_appearance}', '${data.device_manufacturerdata}', '${data.device_serviceuuid}', ${data.device_txpower}, '${now}', ${data.device_rssi})`;
             await pool.query(sql);
         }
-              
+
         output = {
             status: "success",
             result: req.body.lenght
