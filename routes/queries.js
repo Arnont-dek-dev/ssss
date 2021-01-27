@@ -409,8 +409,7 @@ const createArrayEvent = async(req, res) => {
             }
 
             // const time = new Date(Date.now()).toISOString();
-            const time = moment().locale('th').format();
-            console.log("hfrrhfjs");
+            const time = moment().locale('th').format();;
             const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}', ${device_txpower}, '${time}', ${device_rssi})`;
             await pool.query(sql);
