@@ -405,10 +405,10 @@ const createArrayEvent = async(req, res) => {
             device_rssi = req.body.device_rssi;
         }
         for (let id in req.body) {
-            const now = new Date().now();
+            const time = new Date(Date.now()).toISOString();
             const data = req.body[id];
             const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
-            VALUES('${data.scanner_id}', '${data.device_address}', '${data.device_name}', '${data.device_appearance}', '${data.device_manufacturerdata}', '${data.device_serviceuuid}', ${data.device_txpower}, '${now}', ${data.device_rssi})`;
+            VALUES('${data.scanner_id}', '${data.device_address}', '${data.device_name}', '${data.device_appearance}', '${data.device_manufacturerdata}', '${data.device_serviceuuid}', ${data.device_txpower}, '${time}', ${data.device_rssi})`;
             await pool.query(sql);
         }
 
