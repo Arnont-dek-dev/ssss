@@ -24,11 +24,11 @@ router.post('/scanner', db.createScanner);
 router.put('/scanner/:id', db.updateScanner);
 router.delete('/scanner/:id', db.deleteScanner);
 
-router.get('/event', db.getEvent);
-router.post('/event', db.createEvent);
-router.put('/event/:id', db.updateEvent);
-router.delete('/event/:id', db.deleteEvent);
-router.post('/eventarr', db.createArrayEvent);
+router.get('/events', db.getEvent);
+router.post('/events', db.createEvent);
+router.put('/events/:id', db.updateEvent);
+router.delete('/events/:id', db.deleteEvent);
+router.post('/eventsarr', db.createArrayEvent);
 // const pgp = require('pg-promise')();
 // const connection = `postgres://postgres:123456@localhost:5437/postgres`;
 // const db = pgp(connection);
