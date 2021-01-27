@@ -370,45 +370,46 @@ const deleteEvent = async(req, res) => {
 
 /**************************** CREATE ARRAY EVENT BY ID *******************************/
 const createArrayEvent = async(req, res) => {
-    let scanner_id = "NULL";
-    let device_address = "NULL";
-    let device_name = "NULL";
-    let device_appearance = "NULL";
-    let device_manufacturerdata = "NULL";
-    let device_serviceuuid = "NULL";
-    let device_txpower = "NULL";
-    let device_rssi = "NULL";
-
     try {
-        if (req.body.scanner_id != undefined) {
-            scanner_id = req.body.scanner_id;
-        }
-        if (req.body.device_address != undefined) {
-            device_address = req.body.device_address;
-        }
-        if (req.body.device_name != undefined) {
-            device_name = req.body.device_name;
-        }
-        if (req.body.device_appearance != undefined) {
-            device_appearance = req.body.device_appearance;
-        }
-        if (req.body.device_manufacturerdata != undefined) {
-            device_manufacturerdata = req.body.device_manufacturerdata;
-        }
-        if (req.body.device_serviceuuid != undefined) {
-            device_serviceuuid = req.body.device_serviceuuid;
-        }
-        if (req.body.device_txpower != undefined) {
-            device_txpower = req.body.device_txpower;
-        }
-        if (req.body.device_rssi != undefined) {
-            device_rssi = req.body.device_rssi;
-        }
         for (let id in req.body) {
+
+            let scanner_id = "NULL";
+            let device_address = "NULL";
+            let device_name = "NULL";
+            let device_appearance = "NULL";
+            let device_manufacturerdata = "NULL";
+            let device_serviceuuid = "NULL";
+            let device_txpower = "NULL";
+            let device_rssi = "NULL";
+
+            if (req.body[id].scanner_id != undefined) {
+                scanner_id = req.body[id].scanner_id;
+            }
+            if (req.body[id].device_address != undefined) {
+                device_address = req.body[id].device_address;
+            }
+            if (req.body[id].device_name != undefined) {
+                device_name = req.body[id].device_name;
+            }
+            if (req.body[id].device_appearance != undefined) {
+                device_appearance = req.body[id].device_appearance;
+            }
+            if (req.body[id].device_manufacturerdata != undefined) {
+                device_manufacturerdata = req.body[id].device_manufacturerdata;
+            }
+            if (req.body[id].device_serviceuuid != undefined) {
+                device_serviceuuid = req.body[id].device_serviceuuid;
+            }
+            if (req.body[id].device_txpower != undefined) {
+                device_txpower = req.body[id].device_txpower;
+            }
+            if (req.body[id].device_rssi != undefined) {
+                device_rssi = req.body[id].device_rssi;
+            }
+
             const time = new Date(Date.now()).toISOString();
-            const data = req.body[id];
             const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
-            VALUES('${data.scanner_id}', '${data.device_address}', '${data.device_name}', '${data.device_appearance}', '${data.device_manufacturerdata}', '${data.device_serviceuuid}', ${data.device_txpower}, '${time}', ${data.device_rssi})`;
+            VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}', ${device_txpower}, '${time}', ${device_rssi})`;
             await pool.query(sql);
         }
 
